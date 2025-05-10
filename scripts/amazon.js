@@ -55,13 +55,11 @@ document.querySelectorAll(".js-add-to-cart").forEach((buttonEl) => {
         const productId = buttonEl.dataset.productId;
 
         let matchingItem;
-
         cart.forEach((item) => {
             if (item.productId === productId) {
                 matchingItem = item;
             }
         });
-
         if (matchingItem) {
             matchingItem.quantity++;
         } else {
@@ -72,7 +70,6 @@ document.querySelectorAll(".js-add-to-cart").forEach((buttonEl) => {
         }
 
         let cartQuantity = 0;
-
         cart.forEach((item) => {
             cartQuantity += item.quantity;
         });
