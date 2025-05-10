@@ -35,7 +35,7 @@ products.forEach((product) => {
                 </select>
             </div>
             <div class="product-spacer"></div>
-            <div class="added-to-cart">
+            <div class="added-to-cart js-added-to-cart-${product.id}">
                 <img src="images/icons/checkmark.png">
                 Added
             </div>
@@ -52,20 +52,24 @@ products.forEach((product) => {
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
 // when clicking on add to cart button
-document.querySelectorAll(".js-add-to-cart").forEach((buttonEl) => {
+const addToCartButtons = document.querySelectorAll(".js-add-to-cart");
+const timeoutIds = {};
+
+addToCartButtons.forEach((buttonEl) => {
     buttonEl.addEventListener("click", () => {
-        const productId = buttonEl.dataset.productId;
+        const { productId } = buttonEl.dataset;
         const quantitySelectorEl = document.querySelector(
             `.js-quantity-selector-${productId}`
         ).value;
         const selectedQuantity = Number(quantitySelectorEl);
+        const addedMsgEl = document.querySelector(
+            `.js-added-to-cart-${productId}`
+        );
 
-        let matchingItem;
-        cart.forEach((item) => {
-            if (item.productId === productId) {
-                matchingItem = item;
-            }
-        });
+        // update cart
+        const matchingItem = cart.forEach(
+            (item) => item.productId === productId
+        );
         if (matchingItem) {
             matchingItem.quantity += selectedQuantity;
         } else {
@@ -75,11 +79,22 @@ document.querySelectorAll(".js-add-to-cart").forEach((buttonEl) => {
             });
         }
 
-        let cartQuantity = 0;
-        cart.forEach((item) => {
-            cartQuantity += item.quantity;
-        });
+        // update and display total cart quantity
+        const totalQuantity = cart.reduce(
+            (sum, item) => sum + item.quantity,
+            0
+        );
+        document.querySelector(".js-cart-quantity").innerHTML = totalQuantity;
 
-        document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+        /* show and remove added msg feature */
+        addedMsgEl.classList.add("js-added-to-cart");
+        // clear prev timeout
+        if (timeoutIds[productId]) {
+            clearTimeout(timeoutIds[productId]);
+        }
+        // remove added msg
+        timeoutIds[productId] = setTimeout(() => {
+            addedMsgEl.classList.remove("js-added-to-cart");
+        }, 2000);
     });
 });
