@@ -63,6 +63,8 @@ function updateCartQuantity() {
     document.querySelector(".js-cart-quantity").innerHTML = totalQuantity;
 }
 
+updateCartQuantity();
+
 // when clicking on add to cart button
 const addToCartButtons = document.querySelectorAll(".js-add-to-cart");
 const timeoutIds = {};
