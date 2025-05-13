@@ -1,7 +1,7 @@
-import { cart } from "../../data/cart.js";
+import { cart } from "../../data/cart-class.js";
 
 export function renderCheckoutHeader() {
-    const totalCartQuantity = cart.reduce(
+    const totalCartQuantity = cart.cartItems.reduce(
         (sum, cartItem) => sum + cartItem.quantity,
         0
     );

@@ -1,9 +1,4 @@
-import {
-    cart,
-    removeFromCart,
-    updateQuantity,
-    updateDeliveryOption,
-} from "../../data/cart.js";
+import { cart } from "../../data/cart-class.js";
 import { getProduct } from "../../data/products.js";
 import formatCurrency from "../utils/money.js";
 import {
@@ -13,12 +8,13 @@ import {
 } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 import { renderCheckoutHeader } from "./checkoutHeader.js";
+console.log(cart);
 
 ////////////////////////////////////////
 export function renderOrderSummary() {
     let cartSummaryHTML = "";
 
-    cart.forEach((cartItem) => {
+    cart.cartItems.forEach((cartItem) => {
         const productId = cartItem.productId;
         const matchingProduct = getProduct(productId);
         const deliveryOptionId = cartItem.deliveryOptionId;
@@ -120,7 +116,7 @@ export function renderOrderSummary() {
     document.querySelectorAll(".js-delete-link").forEach((link) => {
         link.addEventListener("click", () => {
             const { productId } = link.dataset;
-            removeFromCart(productId);
+            cart.removeFromCart(productId);
 
             /*
             const container = document.querySelector(
@@ -185,7 +181,7 @@ export function renderOrderSummary() {
         }
 
         // update data
-        updateQuantity(productId, newQuantity);
+        cart.updateQuantity(productId, newQuantity);
 
         // update UI
         quantityLabel.innerHTML = newQuantity;
@@ -201,7 +197,7 @@ export function renderOrderSummary() {
         el.addEventListener("click", () => {
             const { productId, deliveryOptionId } = el.dataset;
 
-            updateDeliveryOption(productId, deliveryOptionId);
+            cart.updateDeliveryOption(productId, deliveryOptionId);
             renderOrderSummary();
             renderPaymentSummary();
         });

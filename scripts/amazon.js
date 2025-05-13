@@ -1,4 +1,4 @@
-import { cart, addToCart } from "../data/cart.js";
+import { cart } from "../data/cart-class.js";
 import { products } from "../data/products.js";
 let productsHTML = "";
 
@@ -54,7 +54,7 @@ document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
 // update and display total cart quantity
 function updateCartQuantity() {
-    const totalQuantity = cart.reduce(
+    const totalQuantity = cart.cartItems.reduce(
         (sum, cartItem) => sum + cartItem.quantity,
         0
     );
@@ -78,7 +78,7 @@ addToCartButtons.forEach((buttonEl) => {
             `.js-added-to-cart-${productId}`
         );
 
-        addToCart(productId, selectedQuantity);
+        cart.addToCart(productId, selectedQuantity);
         updateCartQuantity();
 
         /* show and remove added msg feature */
