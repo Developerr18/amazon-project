@@ -539,3 +539,44 @@ export const products = [
     }
     return new Product(productDetails);
 });
+
+//////////////////////////////////////
+/*
+const date = new Date();
+console.log(date);
+console.log(date.toLocaleTimeString());
+*/
+
+///////////////////////////////////
+/*
+console.log(this); // undefined
+const obj2 = {
+    a: 2,
+    b: this.a // error
+}
+*/
+
+////////////////////////////////////
+/*
+function logThis() {
+    console.log(this);
+}
+logThis(); // undefined
+logThis.call("hello"); // hello
+
+// arrow fn 'this'
+const obj3 = {
+    method: () => {
+        console.log(this);
+    },
+};
+obj3.method(); // undefined
+
+// regular fn 'this'
+const obj4 = {
+    method() {
+        console.log(this);
+    },
+};
+obj4.method(); // method fn
+*/
