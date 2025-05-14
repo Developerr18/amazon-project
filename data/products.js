@@ -94,9 +94,16 @@ export function loadProductsFetch() {
             });
 
             console.log("load products");
+        })
+        .catch((error) => {
+            console.log("unexpected error! try again later:", error);
         });
+
+    // if a fn return promise, we can use .then()
     return promise;
 }
+
+loadProductsFetch();
 
 /*
 loadProductsFetch().then(() => {

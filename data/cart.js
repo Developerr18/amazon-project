@@ -78,14 +78,17 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 }
 
 //////////////////////////////////////////
-export function loadCart(renderProductsFn) {
-    const xhr = new XMLHttpRequest();
+export async function loadCart() {
+    try {
+        const response = await fetch("https://supersimplebackend.dev/cart");
 
-    xhr.addEventListener("load", () => {
-        console.log(xhr.response);
-        renderProductsFn();
-    });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-    xhr.open("GET", "https://supersimplebackend.dev/cart");
-    xhr.send();
+        const data = await response.text();
+        console.log(data);
+    } catch (error) {
+        console.error("Failed to load cart:", error);
+    }
 }
