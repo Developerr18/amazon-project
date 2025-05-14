@@ -1,9 +1,13 @@
 import { cart } from "../data/cart-class.js";
-import { products } from "../data/products.js";
-let productsHTML = "";
+import { products, loadProducts } from "../data/products.js";
 
-products.forEach((product) => {
-    productsHTML += `
+loadProducts(renderProductsGrid);
+
+function renderProductsGrid() {
+    let productsHTML = "";
+
+    products.forEach((product) => {
+        productsHTML += `
         <div class="product-container">
             <div class="product-image-container">
                 <img class="product-image" src="${product.image}">
@@ -47,49 +51,50 @@ products.forEach((product) => {
             </button>
         </div>
     `;
-});
-
-// show product list
-document.querySelector(".js-products-grid").innerHTML = productsHTML;
-
-// update and display total cart quantity
-function updateCartQuantity() {
-    const totalQuantity = cart.cartItems.reduce(
-        (sum, cartItem) => sum + cartItem.quantity,
-        0
-    );
-    document.querySelector(".js-cart-quantity").innerHTML = totalQuantity;
-}
-
-updateCartQuantity();
-
-// when clicking on add to cart button
-const addToCartButtons = document.querySelectorAll(".js-add-to-cart");
-const timeoutIds = {};
-
-addToCartButtons.forEach((buttonEl) => {
-    buttonEl.addEventListener("click", () => {
-        const { productId } = buttonEl.dataset;
-        const quantitySelectorEl = document.querySelector(
-            `.js-quantity-selector-${productId}`
-        ).value;
-        const selectedQuantity = Number(quantitySelectorEl);
-        const addedMsgEl = document.querySelector(
-            `.js-added-to-cart-${productId}`
-        );
-
-        cart.addToCart(productId, selectedQuantity);
-        updateCartQuantity();
-
-        /* show and remove added msg feature */
-        addedMsgEl.classList.add("js-added-to-cart");
-        // clear prev timeout
-        if (timeoutIds[productId]) {
-            clearTimeout(timeoutIds[productId]);
-        }
-        // remove added msg
-        timeoutIds[productId] = setTimeout(() => {
-            addedMsgEl.classList.remove("js-added-to-cart");
-        }, 2000);
     });
-});
+
+    // show product list
+    document.querySelector(".js-products-grid").innerHTML = productsHTML;
+
+    // update and display total cart quantity
+    function updateCartQuantity() {
+        const totalQuantity = cart.cartItems.reduce(
+            (sum, cartItem) => sum + cartItem.quantity,
+            0
+        );
+        document.querySelector(".js-cart-quantity").innerHTML = totalQuantity;
+    }
+
+    updateCartQuantity();
+
+    // when clicking on add to cart button
+    const addToCartButtons = document.querySelectorAll(".js-add-to-cart");
+    const timeoutIds = {};
+
+    addToCartButtons.forEach((buttonEl) => {
+        buttonEl.addEventListener("click", () => {
+            const { productId } = buttonEl.dataset;
+            const quantitySelectorEl = document.querySelector(
+                `.js-quantity-selector-${productId}`
+            ).value;
+            const selectedQuantity = Number(quantitySelectorEl);
+            const addedMsgEl = document.querySelector(
+                `.js-added-to-cart-${productId}`
+            );
+
+            cart.addToCart(productId, selectedQuantity);
+            updateCartQuantity();
+
+            /* show and remove added msg feature */
+            addedMsgEl.classList.add("js-added-to-cart");
+            // clear prev timeout
+            if (timeoutIds[productId]) {
+                clearTimeout(timeoutIds[productId]);
+            }
+            // remove added msg
+            timeoutIds[productId] = setTimeout(() => {
+                addedMsgEl.classList.remove("js-added-to-cart");
+            }, 2000);
+        });
+    });
+}

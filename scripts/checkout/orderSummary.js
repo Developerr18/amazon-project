@@ -8,7 +8,6 @@ import {
 } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 import { renderCheckoutHeader } from "./checkoutHeader.js";
-console.log(cart);
 
 ////////////////////////////////////////
 export function renderOrderSummary() {
