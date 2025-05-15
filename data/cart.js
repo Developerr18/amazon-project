@@ -78,7 +78,7 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 }
 
 //////////////////////////////////////////
-export async function loadCart() {
+export async function loadCartFetch() {
     try {
         const response = await fetch("https://supersimplebackend.dev/cart");
 
