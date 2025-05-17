@@ -1,10 +1,16 @@
 import { cart } from "../../data/cart-class.js";
 
 export function renderCheckoutHeader() {
-    const totalCartQuantity = cart.cartItems.reduce(
-        (sum, cartItem) => sum + cartItem.quantity,
-        0
-    );
+    let totalCartQuantity = 0;
+
+    if (cart.cartItems.length === 0) {
+        totalCartQuantity = 0;
+    } else {
+        totalCartQuantity = cart.cartItems.reduce(
+            (sum, cartItem) => sum + cartItem.quantity,
+            0
+        );
+    }
 
     const checkoutHeader = `
         <div class="header-content">

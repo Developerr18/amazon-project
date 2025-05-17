@@ -25,7 +25,7 @@ async function loadPage() {
 
 loadPage().then((value) => {
     console.log("nextstep!");
-    console.log(value);
+    console.log(value); // value2
 });
 
 ////////////////////////////////////////

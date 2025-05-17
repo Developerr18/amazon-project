@@ -63,12 +63,16 @@ export function renderPaymentSummary() {
         </button>
     `;
 
-    document.querySelector(".js-payment-summary").innerHTML =
-        paymentSummaryHTML;
+    function updatePlaceOrderButton() {
+        const placeOrderBtn = document.querySelector(".js-place-order");
 
-    document
-        .querySelector(".js-place-order")
-        .addEventListener("click", async () => {
+        if (cart.cartItems.length === 0) {
+            placeOrderBtn.classList.add("place-order-button-disable");
+        } else {
+            placeOrderBtn.classList.remove("place-order-button-disable");
+        }
+
+        placeOrderBtn.addEventListener("click", async () => {
             try {
                 const response = await fetch(
                     "https://supersimplebackend.dev/orders",
@@ -82,12 +86,18 @@ export function renderPaymentSummary() {
                         }),
                     }
                 );
-                const order = await response.json();
-                addOrder(order);
+                const orderDetails = await response.json();
+                addOrder(orderDetails);
             } catch (error) {
                 console.error("unexpected error: try again later", error);
             }
 
+            localStorage.setItem("cart", JSON.stringify([]));
             window.location.href = "orders.html";
         });
+    }
+
+    document.querySelector(".js-payment-summary").innerHTML =
+        paymentSummaryHTML;
+    updatePlaceOrderButton();
 }

@@ -228,3 +228,8 @@
 .is-editing-quantity .update-quantity-link {
     display: none;
 }
+
+.place-order-button-disable {
+    opacity: 0.5;
+    pointer-events: none;
+}
