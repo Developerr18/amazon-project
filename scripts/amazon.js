@@ -1,7 +1,7 @@
 import { cart } from "../data/cart-class.js";
-import { products, loadProducts } from "../data/products.js";
+import { products, loadProductsFetch } from "../data/products.js";
 
-loadProducts(renderProductsGrid);
+loadProductsFetch(renderProductsGrid);
 
 function renderProductsGrid() {
     let productsHTML = "";
@@ -76,8 +76,8 @@ function renderProductsGrid() {
             const { productId } = buttonEl.dataset;
             const quantitySelectorEl = document.querySelector(
                 `.js-quantity-selector-${productId}`
-            ).value;
-            const selectedQuantity = Number(quantitySelectorEl);
+            );
+            const selectedQuantity = Number(quantitySelectorEl.value);
             const addedMsgEl = document.querySelector(
                 `.js-added-to-cart-${productId}`
             );

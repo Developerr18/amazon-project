@@ -63,41 +63,45 @@ export function renderPaymentSummary() {
         </button>
     `;
 
-    function updatePlaceOrderButton() {
-        const placeOrderBtn = document.querySelector(".js-place-order");
-
-        if (cart.cartItems.length === 0) {
-            placeOrderBtn.classList.add("place-order-button-disable");
-        } else {
-            placeOrderBtn.classList.remove("place-order-button-disable");
-        }
-
-        placeOrderBtn.addEventListener("click", async () => {
-            try {
-                const response = await fetch(
-                    "https://supersimplebackend.dev/orders",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            cart: cart,
-                        }),
-                    }
-                );
-                const orderDetails = await response.json();
-                addOrder(orderDetails);
-            } catch (error) {
-                console.error("unexpected error: try again later", error);
-            }
-
-            localStorage.setItem("cart", JSON.stringify([]));
-            window.location.href = "orders.html";
-        });
-    }
-
     document.querySelector(".js-payment-summary").innerHTML =
         paymentSummaryHTML;
+
     updatePlaceOrderButton();
+}
+
+function updatePlaceOrderButton() {
+    const placeOrderBtn = document.querySelector(".js-place-order");
+
+    if (cart.cartItems.length === 0) {
+        placeOrderBtn.classList.add("place-order-button-disable");
+    } else {
+        placeOrderBtn.classList.remove("place-order-button-disable");
+    }
+
+    // sent cart to backend
+    placeOrderBtn.addEventListener("click", async () => {
+        try {
+            const response = await fetch(
+                "https://supersimplebackend.dev/orders",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        cart: cart,
+                    }),
+                }
+            );
+
+            const orderDetails = await response.json();
+            addOrder(orderDetails); // update data
+        } catch (error) {
+            console.error("unexpected error: try again later", error);
+        }
+
+        cart.cartItems = [];
+        cart.saveToStorage();
+        window.location.href = "orders.html";
+    });
 }

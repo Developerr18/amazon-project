@@ -8,6 +8,7 @@ import { cart } from "../data/cart-class.js";
 async function loadPage() {
     await loadProductsFetch();
 
+    // if no items in order array
     if (!orders || orders.length === 0) {
         const parentEl = document.querySelector(".main");
         const msgEl = document.createElement("h1");
@@ -18,6 +19,7 @@ async function loadPage() {
         return;
     }
 
+    // creating html of page
     let orderSummaryHTML = "";
 
     orders.forEach((order) => {
@@ -49,10 +51,21 @@ async function loadPage() {
     });
 
     document.querySelector(".js-orders-grid").innerHTML = orderSummaryHTML;
+
+    //////////////////////////////////////////
+    document.querySelectorAll(".js-buy-again-button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const { productId } = btn.dataset;
+
+            cart.addToCart(productId, 1);
+            showTotalQuantity();
+        });
+    });
 }
 
 loadPage();
 
+//////////////////////////////////////////////
 function productListHTML(order) {
     let productListHTML = "";
 
@@ -98,22 +111,6 @@ function productListHTML(order) {
 
     return productListHTML;
 }
-
-///////////////////////////////////////////
-document.querySelectorAll(".js-track-package-button").forEach((trackBtn) => {
-    trackBtn.addEventListener("click", () => {
-        window.location.href = "tracking.html";
-    });
-});
-
-/////////////////////////////////////////
-document.querySelectorAll(".js-buy-again-button").forEach((btn) => {
-    btn.addEventListener("click", () => {
-        const { productId } = btn.dataset;
-
-        cart.addToCart(productId, 1);
-    });
-});
 
 ///////////////////////////////////////
 function showTotalQuantity() {
