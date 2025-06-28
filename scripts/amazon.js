@@ -64,7 +64,6 @@ function renderProductsGrid() {
         );
         document.querySelector(".js-cart-quantity").innerHTML = totalQuantity;
     }
-
     updateCartQuantity();
 
     // when clicking on add to cart button

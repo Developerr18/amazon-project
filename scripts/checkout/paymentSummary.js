@@ -7,6 +7,7 @@ import { addOrder } from "../../data/orders.js";
 export function renderPaymentSummary() {
     let productPriceCents = 0;
     let shippingPriceCents = 0;
+
     const itemsCount = cart.cartItems.reduce(
         (sum, cartItem) => sum + cartItem.quantity,
         0
