@@ -1,7 +1,6 @@
 class Cart {
   cartItems;
   #localStorageKey;
-
   constructor(localStorageKey) {
     this.#localStorageKey = localStorageKey;
     this.#loadFromStorage();
@@ -10,7 +9,6 @@ class Cart {
   ///////////////////////////////////////
   #loadFromStorage() {
     this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
-
     if (!this.cartItems || this.cartItems.length === 0) {
       this.cartItems = [];
     }
@@ -26,7 +24,6 @@ class Cart {
     const matchingItem = this.cartItems.find(
       (cartItem) => cartItem.productId === productId
     );
-
     if (matchingItem) {
       matchingItem.quantity += selectedQuantity;
     } else {
@@ -36,7 +33,6 @@ class Cart {
         deliveryOptionId: "1",
       });
     }
-
     this.saveToStorage();
   }
 
@@ -45,7 +41,6 @@ class Cart {
     const newCart = this.cartItems.filter(
       (cartItem) => cartItem.productId !== productId
     );
-
     this.cartItems = newCart;
     this.saveToStorage();
   }
@@ -58,7 +53,6 @@ class Cart {
     if (matchingProduct) {
       matchingProduct.quantity = newQuantity;
     }
-
     this.saveToStorage();
   }
 
@@ -67,9 +61,7 @@ class Cart {
     const matchingItem = this.cartItems.find(
       (cartItem) => cartItem.productId === productId
     );
-
     matchingItem.deliveryOptionId = deliveryOptionId;
-
     this.saveToStorage();
   }
 }
@@ -77,7 +69,7 @@ class Cart {
 export const cart = new Cart("cart");
 console.log(cart);
 
-const businessCart = new Cart("cart-business");
+// const businessCart = new Cart("cart-business");
 
 /*
 cart.addToCart("83d4ca15-0f35-48f5-b7a3-1ea210004f2e", 18);
