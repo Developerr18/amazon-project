@@ -90,7 +90,7 @@ function renderProductsGrid() {
       if (timeoutIds[productId]) {
         clearTimeout(timeoutIds[productId]);
       }
-      // remove added msg
+
       timeoutIds[productId] = setTimeout(() => {
         addedMsgEl.classList.remove("js-added-to-cart");
       }, 2000);

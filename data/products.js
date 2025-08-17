@@ -53,12 +53,13 @@ class Appliance extends Product {
 
   extraInfoHTML() {
     return `
-        <a href="${this.instructionsLink}" target="_blank">
-            Instructions
-        </a>
-        <a href="${this.warrantyLink}" target="_blank">
-            Warranty
-        </a>`;
+      <a href="${this.instructionsLink}" target="_blank">
+          Instructions
+      </a>
+      <a href="${this.warrantyLink}" target="_blank">
+          Warranty
+      </a>
+    `;
   }
 }
 
