@@ -3,7 +3,7 @@ import formatCurrency from "../scripts/utils/money.js";
 //////////////////////////////////////
 export function getProduct(productId) {
   const matchingProduct = products.find((product) => product.id === productId);
-  return matchingProduct.Appliance;
+  return matchingProduct;
 }
 
 ////////////////////////////////////////
