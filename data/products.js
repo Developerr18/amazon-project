@@ -88,7 +88,7 @@ export function loadProductsFetch(renderProductsFn = () => {}) {
   return promise;
 }
 
-loadProductsFetch();
+loadProductsFetch().then((res) => console.log(res));
 
 /*
 loadProductsFetch().then(() => {
